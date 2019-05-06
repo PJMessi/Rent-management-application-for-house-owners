@@ -14,7 +14,7 @@ class AddTypeAndPhotoColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string("role")->default("teacher");
+            $table->string("role")->default("admin");
         });
     }
 
