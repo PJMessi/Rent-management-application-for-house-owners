@@ -18,3 +18,4 @@ This is a web application for tracking renters salary information, designed for 
 - Use of [Fontawesome](https://fontawesome.com/), [Sweet Alert 2](https://sweetalert2.github.io/) to smoothen user experience 
 
 This application is not yet fully complete.
+I have included my database 'renter.sql', in case you want to use it
