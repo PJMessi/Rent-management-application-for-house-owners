@@ -17,5 +17,8 @@ This is a web application for tracking renters salary information, designed for 
 - Use of Vue [Vue Progress Bar](https://github.com/hilongjw/vue-progressbar#demo) to indicate any operations
 - Use of [Fontawesome](https://fontawesome.com/), [Sweet Alert 2](https://sweetalert2.github.io/) to smoothen user experience 
 
-This application is not yet fully complete.
-I have included my database 'renter.sql', in case you want to use it
+Its been just a few days since i started this application, so it's not yet complete.
+But you can see the full implementation of all the features that i mentioned above in the code.
+
+I have included my database 'db.sql', in case you want to use it.
+Just create a database in mysql and edit the .env file accordingly. After that import 'db.sql' in that database.
