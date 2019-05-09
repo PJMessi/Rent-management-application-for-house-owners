@@ -10,7 +10,7 @@
     @can('isAdmin')
     <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-cog green"></i>
+            <i class="nav-icon fas fa-cogs green"></i>
             <p>
                 Management
                 <i class="right fa fa-angle-left"></i>
@@ -37,6 +37,20 @@
         <router-link to="profile" class="nav-link">
             <i class="nav-icon fas fa-user orange"></i>
             <p>Profile</p>
+        </router-link>
+    </li>
+
+    <li class="nav-item">
+        <router-link to="renter" class="nav-link">
+            <i class="nav-icon fas fa-money-bill-alt green"></i>
+            <p>Renters</p>
+        </router-link>
+    </li>
+
+    <li class="nav-item">
+        <router-link to="room" class="nav-link">
+            <i class="nav-icon fas fa-bed purple"></i>
+            <p>Rooms</p>
         </router-link>
     </li>
 

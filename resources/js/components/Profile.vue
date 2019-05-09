@@ -77,14 +77,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input v-model="form.p_address" type="text" name="p_address" class="form-control" :class="{ 'is-invalid': form.errors.has('p_address') }" placeholder="Permanent Address">
-                                        <has-error :form="form" field="p_address"></has-error>
+                                        <input v-model="form.address" type="text" name="address" class="form-control" :class="{ 'is-invalid': form.errors.has('address') }" placeholder="Address">
+                                        <has-error :form="form" field="address"></has-error>
                                     </div>
                                     
-                                    <div class="form-group">
-                                        <input v-model="form.t_address" type="text" name="t_address" class="form-control" :class="{ 'is-invalid': form.errors.has('t_address') }" placeholder="Temporary Address">
-                                        <has-error :form="form" field="t_address"></has-error>
-                                    </div>                       
 
                                 </div>
 
@@ -96,17 +92,11 @@
                                         <has-error :form="form" field="date_of_birth"></has-error>
                                     </div>
 
-                                    <div class="form-group">
-                                        <small class="form-text text-muted">Joined Date</small>
-                                        <input v-model="form.date_of_join" type="date" name="date_of_join" class="form-control" :class="{ 'is-invalid': form.errors.has('date_of_join') }">
-                                        <has-error :form="form" field="date_of_join"></has-error>
-                                    </div>
-
                                     <div v-if="form.role == 'admin'" class="form-group">                                    
                                         <select class="custom-select" v-model="form.role" name="role" :class="{ 'is-invalid': form.errors.has('role') }">
                                             <option selected value="">Choose User Role</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="renter">Renter</option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="Renter">Renter</option>
                                         </select>
                                         <has-error :form="form" field="role"></has-error>
                                     </div>
@@ -159,15 +149,14 @@
                     l_name: '',
                     phone_1: '',
                     phone_2: '',
-                    p_address: '',
-                    t_address: '',
+                    address: '',
                     date_of_birth: '',
-                    date_of_join: '',
                     email: '',
                     password: '',
                     password_confirmation: '',
                     role: '',
                     photo: '',
+                    created_at: '',
                 }),
             }
         },
@@ -232,6 +221,8 @@
                         type: 'success',
                         title: 'User Information Updated Successfully'
                     });
+
+                    this.form.fill(data);
                 })
                 .catch((error) => {
                     this.loading = false;

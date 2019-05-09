@@ -20,27 +20,29 @@
                         <table class="table table-hover table-bordered table-sm">
                             <tbody>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SN</th>
                                     <th>Role</th>
                                     <th>Name</th>
                                     <th>Phone</th>
-                                    <th>Permanent Address</th>
-                                    <th>Temp Address</th>
-                                    <th>Joined Date</th>
+                                    <th>Address</th>
+                                    <th>Email</th>
+              
+                                    <th>Added on</th>
                                     <th></th>
                                 </tr>
                                 <tr v-for="(user, index) in users.data" v-bind:key="user.id">
                                     <td>{{(users.current_page - 1) * users.per_page + index+1}}</td>
-                                    <td>{{user.role | capitalize}}</td>
+                                    <td>{{user.role}}</td>
                                     <td><span>{{user.f_name}}</span> <span>{{user.l_name}}</span></td>
                                     <td><span>{{user.phone_1}}</span><span v-if="user.phone2">, {{user.phone_2}}</span></td>
-                                    <td>{{user.p_address}}</td>
-                                    <td>{{user.t_address}}</td>
-                                    <td>{{user.date_of_join | format_date}}</td>
-                                    <td style="font-size: 1.1rem">
+                                    <td>{{user.address}}</td>
+                                    <td>{{user.email}}</td>
+                               
+                                    <td>{{user.created_at | format_date}}</td>
+                                    <td style="font-size: 1.1rem;">
                                         <a href="#" @click="view_user(user)" title="Show Details"><i class="fas fa-eye blue"></i></a> &nbsp;
-                                        <a href="#" v-if="user.role != 'admin'" @click="show_edit_user(user)" title="Edit User"><i class="fas fa-user-edit orange"></i></a> &nbsp;
-                                        <a href="#" v-if="user.role != 'admin'" @click="delete_user(user)" title="Delete User"><i class="fas fa-user-times red"></i></a>
+                                        <a href="#" v-if="user.role != 'Admin'" @click="show_edit_user(user)" title="Edit User"><i class="fas fa-user-edit orange"></i></a> &nbsp;
+                                        <a href="#" v-if="user.role != 'Admin'" @click="delete_user(user)" title="Delete User"><i class="fas fa-user-times red"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -68,6 +70,7 @@
                 <!-- /.card -->
             </div>
         </div>
+
         <div class="row justify-content-center" v-else>
             <not-found></not-found>
         </div>
@@ -117,14 +120,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input v-model="form.p_address" type="text" name="p_address" class="form-control" :class="{ 'is-invalid': form.errors.has('p_address') }" placeholder="Permanent Address">
-                                        <has-error :form="form" field="p_address"></has-error>
+                                        <input v-model="form.address" type="text" name="address" class="form-control" :class="{ 'is-invalid': form.errors.has('address') }" placeholder="Address">
+                                        <has-error :form="form" field="address"></has-error>
                                     </div>
-                                    
-                                    <div class="form-group">
-                                        <input v-model="form.t_address" type="text" name="t_address" class="form-control" :class="{ 'is-invalid': form.errors.has('t_address') }" placeholder="Temporary Address">
-                                        <has-error :form="form" field="t_address"></has-error>
-                                    </div>                       
+                                                    
 
                                 </div>
 
@@ -136,17 +135,11 @@
                                         <has-error :form="form" field="date_of_birth"></has-error>
                                     </div>
 
-                                    <div class="form-group">
-                                        <small class="form-text text-muted">Joined Date</small>
-                                        <input v-model="form.date_of_join" type="date" name="date_of_join" class="form-control" :class="{ 'is-invalid': form.errors.has('date_of_join') }">
-                                        <has-error :form="form" field="date_of_join"></has-error>
-                                    </div>
-
                                     <div class="form-group">                                    
                                         <select class="custom-select" v-model="form.role" name="role" :class="{ 'is-invalid': form.errors.has('role') }">
                                             <option selected value="">Choose User Role</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="renter">Renter</option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="Renter">Renter</option>
                                         </select>
                                         <has-error :form="form" field="role"></has-error>
                                     </div>
@@ -191,7 +184,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">User Information</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -210,7 +203,8 @@
                                 </tr>
                                 <tr>
                                     <td>Profile Image</td>
-                                    <td><img v-if="form.photo" style="width: 100px" class="img-circle" :src="get_user_image()" alt="User Profile Image"></td>
+                                    <td v-if="form.photo"><img style="width: 100px" class="img-circle" :src="get_user_image()" alt="User Profile Image"></td>
+                                    <td v-else>Profile Image Not Set</td>
                                 </tr>
                                 <tr>
                                     <td>First Name</td>
@@ -229,20 +223,16 @@
                                     <td>{{form.phone_2}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Permanent Address</td>
-                                    <td>{{form.p_address}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Temporary Address</td>
-                                    <td>{{form.t_address}}</td>
+                                    <td>Address</td>
+                                    <td>{{form.address}}</td>
                                 </tr>
                                 <tr>
                                     <td>Date of Birth</td>
                                     <td>{{form.date_of_birth | format_date}}</td>
                                 </tr>                                
                                 <tr>
-                                    <td>Joined Date</td>
-                                    <td>{{form.date_of_join | format_date}}</td>
+                                    <td>Added On</td>
+                                    <td>{{form.created_at | format_date}}</td>
                                 </tr>
                                 <tr>
                                     <td>Email</td>
@@ -273,15 +263,14 @@
                     l_name: '',
                     phone_1: '',
                     phone_2: '',
-                    p_address: '',
-                    t_address: '',
+                    address: '',
                     date_of_birth: '',
-                    date_of_join: '',
                     email: '',
                     password: '',
                     password_confirmation: '',
                     role: '',
                     photo: '',
+                    created_at: '',
                 }),
 
                 is_edit: false,
@@ -335,7 +324,6 @@
                 .then(({ data }) => { 
 
                     Fire.$emit("users_table_changed");
-                    this.loading = false;
                     this.$Progress.finish();
                     $("#add_edit_user_modal").modal("hide");
                     Toast.fire({
@@ -344,7 +332,6 @@
                     });
                 })
                 .catch((error) => {
-                    this.loading = false;
                     this.$Progress.fail();
                     console.log("Caught Error: " + error);
                     Toast.fire({
@@ -393,8 +380,7 @@
                 this.form.put('api/user/' + this.form.id)
                 .then(({ data }) => { 
 
-                    Fire.$emit("users_table_changed");
-                    this.loading = false;
+                    Fire.$emit("users_table_changed");   
                     this.$Progress.finish();
                     $("#add_edit_user_modal").modal("hide");
                     Toast.fire({
@@ -403,7 +389,6 @@
                     });
                 })
                 .catch((error) => {
-                    this.loading = false;
                     this.$Progress.fail();
                     console.log("Caught Error: " + error);
                     Toast.fire({

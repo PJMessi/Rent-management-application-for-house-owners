@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTypeAndPhotoColumnToUsersTable extends Migration
+class CreateRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,14 @@ class AddTypeAndPhotoColumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string("role")->default("admin");
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->bigIncrements('id');
+
+            $table->string("name");
+            $table->integer("rent_amount");
+            $table->mediumText("description")->nullable();
+
+            $table->timestamps();
         });
     }
 
@@ -25,8 +31,6 @@ class AddTypeAndPhotoColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->drop("role");
-        });
+        Schema::dropIfExists('rooms');
     }
 }

@@ -4,10 +4,10 @@ export default class Gate {
     }
 
     isAdmin() {
-        return this.user.role === 'admin';
+        return this.user.role === 'Admin';
     }
 
     isRenter() {
-        return this.user.role === 'renter';
+        return this.user.role === 'Renter';
     }
 }

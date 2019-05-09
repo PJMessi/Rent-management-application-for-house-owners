@@ -82,32 +82,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="p_address" class="col-md-4 col-form-label text-md-right">{{ __('Permanent Address') }}</label>
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="p_address" type="text" class="form-control @error('p_address') is-invalid @enderror" name="p_address" value="{{ old('p_address') }}" required autocomplete="p_address">
+                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
 
-                                @error('p_address')
+                                @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="t_address" class="col-md-4 col-form-label text-md-right">{{ __('Temporary Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="t_address" type="text" class="form-control @error('t_address') is-invalid @enderror" name="t_address" value="{{ old('t_address') }}" required autocomplete="t_address">
-
-                                @error('t_address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>                        
+                        </div>                      
 
                         <div class="form-group row">
                             <label for="date_of_birth" class="col-md-4 col-form-label text-md-right">{{ __('Date of Birth') }}</label>
@@ -122,21 +108,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="date_of_join" class="col-md-4 col-form-label text-md-right">{{ __('Joined Date') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="date_of_join" type="date" class="form-control @error('date_of_join') is-invalid @enderror" name="date_of_join" value="{{ old('date_of_join') }}" required autocomplete="date_of_join">
-
-                                @error('date_of_join')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
@@ -173,9 +144,11 @@
         </div>
     </div>
 </div>
+
 @if ($errors->any())
-     @foreach ($errors->all() as $error)
-         <div>{{$error}}</div>
-     @endforeach
- @endif
+    @foreach ($errors->all() as $error)
+        <div>{{$error}}</div>
+    @endforeach
+@endif
+ 
 @endsection

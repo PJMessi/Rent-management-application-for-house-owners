@@ -24,3 +24,13 @@ Route::apiResources([
 Route::get('/profile', 'API\UserController@profile');
 Route::put('/profile', 'API\UserController@update_profile');
 Route::get('/search', 'API\UserController@search');
+
+Route::apiResources([
+    'room' => 'API\RoomController'
+]);
+
+Route::apiResources([
+    'renter' => 'API\RenterController'
+]);
+
+Route::get('/dashboard', 'API\DashboardController@dashboard');

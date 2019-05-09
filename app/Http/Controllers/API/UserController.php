@@ -14,7 +14,8 @@ class UserController extends Controller
     }
 
     public function index()
-    {   $this->authorize('isAdmin');
+    {   
+        $this->authorize('isAdmin');
         $users = User::orderBy('created_at', 'desc')->paginate(10);
         return response()->json($users);
     }
@@ -26,13 +27,11 @@ class UserController extends Controller
             'l_name' => ['required', 'string', 'max:191'],
             'phone_1' => ['required', 'regex:/^[0-9]{10}$/'],
             'phone_2' => ['nullable', 'regex:/^[0-9]{10}$/'],
-            'p_address' => ['required', 'string', 'max:191'],
-            't_address' => ['required', 'string', 'max:191'],
+            'address' => ['required', 'string', 'max:191'],
             'date_of_birth' => ['required', 'date'],
-            'date_of_join' => ['required', 'date'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'in:admin,renter']
+            'role' => ['required', 'in:Admin,Renter'],
         ];
 
         $customMessages = [
@@ -48,11 +47,9 @@ class UserController extends Controller
         $user->l_name = ucwords($request["l_name"]);
         $user->phone_1 = $request["phone_1"];
         $user->phone_2 = $request["phone_2"];
-        $user->p_address = ucwords($request["p_address"]);
-        $user->t_address = ucwords($request["t_address"]);
+        $user->address = ucwords($request["address"]);
         $user->email = $request["email"];
         $user->date_of_birth = $request["date_of_birth"];
-        $user->date_of_join = $request["date_of_join"];
         $user->password = $request["password"];
         $user->role = $request["role"];
 
@@ -87,13 +84,11 @@ class UserController extends Controller
             'l_name' => ['required', 'string', 'max:191'],
             'phone_1' => ['required', 'regex:/^[0-9]{10}$/'],
             'phone_2' => ['nullable', 'regex:/^[0-9]{10}$/'],
-            'p_address' => ['required', 'string', 'max:191'],
-            't_address' => ['required', 'string', 'max:191'],
+            'address' => ['required', 'string', 'max:191'],
             'date_of_birth' => ['required', 'date'],
-            'date_of_join' => ['required', 'date'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users,email,'.$user->id],
             'password' => ['sometimes', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'in:admin,renter']
+            'role' => ['required', 'in:Admin,Renter'],
         ];
 
         $customMessages = [
@@ -109,11 +104,11 @@ class UserController extends Controller
         $user->l_name = ucwords($request["l_name"]);
         $user->phone_1 = $request["phone_1"];
         $user->phone_2 = $request["phone_2"];
-        $user->p_address = ucwords($request["p_address"]);
-        $user->t_address = ucwords($request["t_address"]);
+        $user->address = ucwords($request["address"]);
+
         $user->email = $request["email"];
         $user->date_of_birth = $request["date_of_birth"];
-        $user->date_of_join = $request["date_of_join"];
+
         if($request["password"])
             $user->password = $request["password"];
         $user->role = $request["role"];
@@ -143,7 +138,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->authorize('isAdmin');
-        $user = User::where('id', $id)->where('role','!=' ,'admin')->get()->first();
+        $user = User::where('id', $id)->where('role','!=' ,'Admin')->get()->first();
         $user->delete();
         return response()->json($user);
     }
@@ -162,13 +157,11 @@ class UserController extends Controller
             'l_name' => ['required', 'string', 'max:191'],
             'phone_1' => ['required', 'regex:/^[0-9]{10}$/'],
             'phone_2' => ['nullable', 'regex:/^[0-9]{10}$/'],
-            'p_address' => ['required', 'string', 'max:191'],
-            't_address' => ['required', 'string', 'max:191'],
+            'address' => ['required', 'string', 'max:191'],
             'date_of_birth' => ['required', 'date'],
-            'date_of_join' => ['required', 'date'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users,email,'.$user->id],
             'password' => ['sometimes', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'in:admin,renter']
+            'role' => ['required', 'in:Admin,Renter'],
         ];
 
         $customMessages = [
@@ -184,11 +177,11 @@ class UserController extends Controller
         $user->l_name = ucwords($request["l_name"]);
         $user->phone_1 = $request["phone_1"];
         $user->phone_2 = $request["phone_2"];
-        $user->p_address = ucwords($request["p_address"]);
-        $user->t_address = ucwords($request["t_address"]);
+        $user->address = ucwords($request["address"]);
+
         $user->email = $request["email"];
         $user->date_of_birth = $request["date_of_birth"];
-        $user->date_of_join = $request["date_of_join"];
+
         if($request["password"])
             $user->password = $request["password"];
         $user->role = $request["role"];
@@ -221,8 +214,7 @@ class UserController extends Controller
                 $query->where('f_name', 'LIKE', "%$search%")
                 ->orWhere('l_name', 'LIKE', "%$search%")
                 ->orWhere('email', 'LIKE', "%$search%")
-                ->orWhere('p_address', 'LIKE', "%$search%")
-                ->orWhere('t_address', 'LIKE', "%$search%")
+                ->orWhere('address', 'LIKE', "%$search%")            
                 ->orWhere('phone_1', 'LIKE', "%$search%")
                 ->orWhere('phone_2', 'LIKE', "%$search%")
                 ->orWhere('role', 'LIKE', "%$search%")
